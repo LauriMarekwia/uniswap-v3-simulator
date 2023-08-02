@@ -340,7 +340,8 @@ export class MainnetDataDownloader {
     if (onlyInitialize) return configurableCorePool;
 
     // replay events to find swap input param we need
-    let startBlock = initializationEventBlockNumber;
+    const startBlock = 16154393; //CHANGE
+    
     let currBlock = startBlock;
 
     while (currBlock <= endBlock) {
