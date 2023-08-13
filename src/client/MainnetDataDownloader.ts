@@ -331,6 +331,7 @@ export class MainnetDataDownloader {
     endBlock: number,
     onlyInitialize: boolean = false
   ): Promise<ConfigurableCorePool> {
+    // @ts-ignore
     let initializationEventBlockNumber =
       await eventDB.getInitializationEventBlockNumber();
 
