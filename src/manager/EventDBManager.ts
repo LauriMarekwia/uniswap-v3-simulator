@@ -166,16 +166,8 @@ export class EventDBManager {
   }
 
   getInitializationEventBlockNumber(): Promise<number> {
-    return this.readPoolConfig().then((res) =>
-      !res
-        ? Promise.resolve(0)
-        : Promise.resolve(
-            null == res.initialization_event_block_number
-              ? 0
-              : res.initialization_event_block_number
-          )
-    );
-  }
+    return Promise.resolve(16154393);
+}
 
   getLatestEventBlockNumber(): Promise<number> {
     return this.readPoolConfig().then((res) =>
