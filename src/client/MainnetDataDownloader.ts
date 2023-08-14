@@ -48,18 +48,14 @@ export class MainnetDataDownloader {
   }
 
   async queryDeploymentBlockNumber(poolAddress: string): Promise<number> {
-    // TODO how to know accurate block number on contract deployment?
-    // Maybe use etherscan API or scan back mainnet trxs through the first event the contract emitted.
-    // BTW, for most cases, it's the same as Initialization event block number. Let's take this now.
-    return this.queryInitializationBlockNumber(poolAddress);
-  }
+    // Hardcoded block number
+    return 16214388;
+}
 
-  async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
-    let uniswapV3Pool = await this.getCorePoolContarct(poolAddress);
-    let initializeTopic = uniswapV3Pool.filters.Initialize();
-    let initializationEvent = await uniswapV3Pool.queryFilter(initializeTopic);
-    return initializationEvent[0].blockNumber;
-  }
+async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
+  // Hardcoded block number
+  return 16214388;
+}
 
   async parseEndBlockTypeWhenInit(
     toBlock: EndBlockTypeWhenInit,
@@ -341,7 +337,7 @@ export class MainnetDataDownloader {
     if (onlyInitialize) return configurableCorePool;
 
     // replay events to find swap input param we need
-    const startBlock = 16154393; //CHANGE
+    const startBlock = 16214388; //CHANGE
     
     let currBlock = startBlock;
 
