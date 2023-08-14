@@ -170,10 +170,9 @@ export class EventDBManager {
 }
 
   getLatestEventBlockNumber(): Promise<number> {
-    return this.readPoolConfig().then((res) =>
-      !res ? Promise.resolve(0) : Promise.resolve(res.latest_event_block_number)
-    );
-  }
+    return Promise.resolve(16214388);
+}
+
 
   getInitialSqrtPriceX96(): Promise<JSBI> {
     return this.readPoolConfig().then((res) =>
