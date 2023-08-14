@@ -211,7 +211,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
     // check toBlock then
     let eventDB = await EventDBManager.buildInstance(mainnetEventDBFilePath);
     try {
-      let latestEventBlockNumber = await eventDB.getLatestEventBlockNumber();
+      let latestEventBlockNumber = 16214388;
       let deploymentBlockNumber = await this.queryDeploymentBlockNumber(
         poolAddress
       );
