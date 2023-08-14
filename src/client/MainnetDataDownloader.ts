@@ -232,8 +232,8 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
 
       // check and record initialize event if needed
       let updateInitializationEvent = false;
-      let initializationEventBlockNumber =
-        await eventDB.getInitializationEventBlockNumber();
+      let initializationEventBlockNumber =16214388;
+        
       if (0 == initializationEventBlockNumber) {
         updateInitializationEvent = true;
         let initializeTopic = uniswapV3Pool.filters.Initialize();
