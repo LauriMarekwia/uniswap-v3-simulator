@@ -49,12 +49,12 @@ export class MainnetDataDownloader {
 
   async queryDeploymentBlockNumber(poolAddress: string): Promise<number> {
     // Hardcoded block number
-    return 16214388;
+    return 16279718;
 }
 
 async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
   // Hardcoded block number
-  return 16214388;
+  return 16279718;
 }
 
   async parseEndBlockTypeWhenInit(
@@ -134,7 +134,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
     let initializeTopic = uniswapV3Pool.filters.Initialize();
     let initializationEvent = await uniswapV3Pool.queryFilter(initializeTopic);
     let initializationSqrtPriceX96 = initializationEvent[0].args.sqrtPriceX96;
-    let initializationEventBlockNumber = 16214388;
+    let initializationEventBlockNumber = 16279718;
 
     // check db file then
     let filePath = this.generateMainnetEventDBFilePath(poolName, poolAddress);
@@ -211,7 +211,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
     // check toBlock then
     let eventDB = await EventDBManager.buildInstance(mainnetEventDBFilePath);
     try {
-      let latestEventBlockNumber = 16214388;
+      let latestEventBlockNumber = 16279718;
       let deploymentBlockNumber = await this.queryDeploymentBlockNumber(
         poolAddress
       );
@@ -232,7 +232,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
 
       // check and record initialize event if needed
       let updateInitializationEvent = false;
-      let initializationEventBlockNumber =16214388;
+      let initializationEventBlockNumber =16279718;
         
       if (0 == initializationEventBlockNumber) {
         updateInitializationEvent = true;
@@ -337,7 +337,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
     if (onlyInitialize) return configurableCorePool;
 
     // replay events to find swap input param we need
-    const startBlock = 16214388; //CHANGE
+    const startBlock = 16279718; //CHANGE
     
     let currBlock = startBlock;
 
