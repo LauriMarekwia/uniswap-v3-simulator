@@ -166,11 +166,11 @@ export class EventDBManager {
   }
 
   getInitializationEventBlockNumber(): Promise<number> {
-    return Promise.resolve(16486223);
+    return Promise.resolve(16487935);
 }
 
   getLatestEventBlockNumber(): Promise<number> {
-    return Promise.resolve(16486223);
+    return Promise.resolve(16487935);
 }
 
 
@@ -310,7 +310,7 @@ export class EventDBManager {
   saveInitializationEventBlockNumber(
     initializationEventBlockNumber: number
   ): Promise<number> {
-    initializationEventBlockNumber = 16486223;
+    initializationEventBlockNumber = 16487935;
     return this.knex.transaction((trx) =>
       this.updateInitializationEventBlockNumber(
         initializationEventBlockNumber,
@@ -513,7 +513,7 @@ export class EventDBManager {
       amount1: JSBIDeserializer(event.amount1),
       tickLower: event.tick_lower,
       tickUpper: event.tick_upper,
-      blockNumber: 16486223,
+      blockNumber: 16487935,
       transactionIndex: event.transaction_index,
       logIndex: event.log_index,
       date: DateConverter.parseDate(event.date),
