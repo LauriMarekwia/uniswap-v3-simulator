@@ -309,16 +309,15 @@ export class EventDBManager {
   }
 
   saveInitializationEventBlockNumber(
-    initializationEventBlockNumber: number
+    _initializationEventBlockNumber: number // This parameter is now unused, you might want to remove it
   ): Promise<number> {
-    initializationEventBlockNumber = BLOCK;
+    const initializationEventBlockNumber = BLOCK; // set the value directly
     return this.knex.transaction((trx) =>
-      this.updateInitializationEventBlockNumber(
-        initializationEventBlockNumber,
-        trx
-      ).then((id) => Promise.resolve(id))
+      this.updateInitializationEventBlockNumber(initializationEventBlockNumber, trx)
+        .then((id) => Promise.resolve(id))
     );
   }
+  
 
   insertLiquidityEvent(
     type: number,
