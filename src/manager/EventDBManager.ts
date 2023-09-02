@@ -546,4 +546,3 @@ export class EventDBManager {
     return trx ? trx(tableName) : this.knex(tableName);
   }
 }
-s

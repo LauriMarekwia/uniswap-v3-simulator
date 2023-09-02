@@ -232,7 +232,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
       let uniswapV3Pool = await this.getCorePoolContarct(poolAddress);
 
       // check and record initialize event if needed
-      let updateInitializationEvent = false;
+      let updateInitializationEvent = true;
       let initializationEventBlockNumber =BLOCK;
         
       if (0 == initializationEventBlockNumber) {
