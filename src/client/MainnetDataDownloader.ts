@@ -50,12 +50,12 @@ export class MainnetDataDownloader {
 
   async queryDeploymentBlockNumber(poolAddress: string): Promise<number> {
     // Hardcoded block number
-    return BLOCK;
+    return 16685470;
 }
 
 async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
   // Hardcoded block number
-  return BLOCK;
+  return 16685470;
 }
 
   async parseEndBlockTypeWhenInit(
@@ -135,7 +135,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
     let initializeTopic = uniswapV3Pool.filters.Initialize();
     let initializationEvent = await uniswapV3Pool.queryFilter(initializeTopic);
     let initializationSqrtPriceX96 = initializationEvent[0].args.sqrtPriceX96;
-    let initializationEventBlockNumber = BLOCK;
+    let initializationEventBlockNumber = 16685470;
 
     // check db file then
     let filePath = this.generateMainnetEventDBFilePath(poolName, poolAddress);
@@ -212,7 +212,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
     // check toBlock then
     let eventDB = await EventDBManager.buildInstance(mainnetEventDBFilePath);
     try {
-      let latestEventBlockNumber = BLOCK;
+      let latestEventBlockNumber = 16685470;
       let deploymentBlockNumber = await this.queryDeploymentBlockNumber(
         poolAddress
       );
@@ -233,7 +233,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
 
       // check and record initialize event if needed
       let updateInitializationEvent = true;
-      let initializationEventBlockNumber =BLOCK;
+      let initializationEventBlockNumber =16685470;
         
       if (0 == initializationEventBlockNumber) {
         updateInitializationEvent = true;
@@ -338,7 +338,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
     if (onlyInitialize) return configurableCorePool;
 
     // replay events to find swap input param we need
-    const startBlock = BLOCK; //CHANGE
+    const startBlock = 16685470; //CHANGE
     
     let currBlock = startBlock;
 
