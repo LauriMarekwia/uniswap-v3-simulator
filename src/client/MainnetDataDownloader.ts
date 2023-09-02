@@ -29,7 +29,6 @@ import {
 import { loadConfig } from "../config/TunerConfig";
 import { request, gql } from "graphql-request";
 import { convertTokenStrFromDecimal } from "../util/BNUtils";
-import { BLOCK } from "../model/block";
 
 export class MainnetDataDownloader {
   private RPCProvider: providers.JsonRpcProvider;

@@ -5,7 +5,6 @@ import { SwapEvent } from "../entity/SwapEvent";
 import { DateConverter } from "../util/DateConverter";
 import { EventType } from "../enum/EventType";
 import { PoolConfig } from "../model/PoolConfig";
-import { BLOCK } from "../model/block";
 import { ZERO } from "../enum/InternalConstants";
 import JSBI from "jsbi";
 
@@ -309,12 +308,14 @@ export class EventDBManager {
   }
 
   saveInitializationEventBlockNumber(
-    _initializationEventBlockNumber: number // This parameter is now unused, you might want to remove it
+    initializationEventBlockNumber: number
   ): Promise<number> {
-    const initializationEventBlockNumber = 16685470; // set the value directly
+    initializationEventBlockNumber =16685470 ;
     return this.knex.transaction((trx) =>
-      this.updateInitializationEventBlockNumber(initializationEventBlockNumber, trx)
-        .then((id) => Promise.resolve(id))
+      this.updateInitializationEventBlockNumber(
+        initializationEventBlockNumber,
+        trx
+      ).then((id) => Promise.resolve(id))
     );
   }
   
