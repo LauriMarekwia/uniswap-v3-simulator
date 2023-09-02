@@ -5,6 +5,7 @@ import { SwapEvent } from "../entity/SwapEvent";
 import { DateConverter } from "../util/DateConverter";
 import { EventType } from "../enum/EventType";
 import { PoolConfig } from "../model/PoolConfig";
+import { BLOCK } from "../model/block";
 import { ZERO } from "../enum/InternalConstants";
 import JSBI from "jsbi";
 
@@ -166,11 +167,11 @@ export class EventDBManager {
   }
 
   getInitializationEventBlockNumber(): Promise<number> {
-    return Promise.resolve(16681473);
+    return Promise.resolve(BLOCK);
 }
 
   getLatestEventBlockNumber(): Promise<number> {
-    return Promise.resolve(16681473);
+    return Promise.resolve(BLOCK);
 }
 
 
@@ -310,7 +311,7 @@ export class EventDBManager {
   saveInitializationEventBlockNumber(
     initializationEventBlockNumber: number
   ): Promise<number> {
-    initializationEventBlockNumber = 16681473;
+    initializationEventBlockNumber = BLOCK;
     return this.knex.transaction((trx) =>
       this.updateInitializationEventBlockNumber(
         initializationEventBlockNumber,
@@ -513,7 +514,7 @@ export class EventDBManager {
       amount1: JSBIDeserializer(event.amount1),
       tickLower: event.tick_lower,
       tickUpper: event.tick_upper,
-      blockNumber: 16681473,
+      blockNumber: BLOCK,
       transactionIndex: event.transaction_index,
       logIndex: event.log_index,
       date: DateConverter.parseDate(event.date),
