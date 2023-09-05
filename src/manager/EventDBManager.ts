@@ -166,13 +166,22 @@ export class EventDBManager {
   }
 
   getInitializationEventBlockNumber(): Promise<number> {
-    return Promise.resolve(16740875);
-}
+    return this.readPoolConfig().then((res) =>
+      !res
+        ? Promise.resolve(0)
+        : Promise.resolve(
+            null == res.initialization_event_block_number
+              ? 0
+              : res.initialization_event_block_number
+          )
+    );
+  }
 
   getLatestEventBlockNumber(): Promise<number> {
-    return Promise.resolve(16740875);
-}
-
+    return this.readPoolConfig().then((res) =>
+      !res ? Promise.resolve(0) : Promise.resolve(res.latest_event_block_number)
+    );
+  }
 
   getInitialSqrtPriceX96(): Promise<JSBI> {
     return this.readPoolConfig().then((res) =>
@@ -310,7 +319,6 @@ export class EventDBManager {
   saveInitializationEventBlockNumber(
     initializationEventBlockNumber: number
   ): Promise<number> {
-    initializationEventBlockNumber =16740875;
     return this.knex.transaction((trx) =>
       this.updateInitializationEventBlockNumber(
         initializationEventBlockNumber,
@@ -318,7 +326,6 @@ export class EventDBManager {
       ).then((id) => Promise.resolve(id))
     );
   }
-  
 
   insertLiquidityEvent(
     type: number,
@@ -514,7 +521,7 @@ export class EventDBManager {
       amount1: JSBIDeserializer(event.amount1),
       tickLower: event.tick_lower,
       tickUpper: event.tick_upper,
-      blockNumber: 16740875,
+      blockNumber: event.block_number,
       transactionIndex: event.transaction_index,
       logIndex: event.log_index,
       date: DateConverter.parseDate(event.date),
