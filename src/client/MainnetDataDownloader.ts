@@ -49,12 +49,12 @@ export class MainnetDataDownloader {
 
   async queryDeploymentBlockNumber(poolAddress: string): Promise<number> {
     // Hardcoded block number
-    return 16740875;
+    return this.queryInitializationBlockNumber(poolAddress); //16
 }
 
 async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
   // Hardcoded block number
-  return 16740875;
+  return initializationEvent[0].blockNumber; //16
 }
 
   async parseEndBlockTypeWhenInit(
@@ -134,7 +134,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
     let initializeTopic = uniswapV3Pool.filters.Initialize();
     let initializationEvent = await uniswapV3Pool.queryFilter(initializeTopic);
     let initializationSqrtPriceX96 = initializationEvent[0].args.sqrtPriceX96;
-    let initializationEventBlockNumber = 16740875;
+    let initializationEventBlockNumber = initializationEvent[0].blockNumber; //16
 
     // check db file then
     let filePath = this.generateMainnetEventDBFilePath(poolName, poolAddress);
@@ -211,7 +211,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
     // check toBlock then
     let eventDB = await EventDBManager.buildInstance(mainnetEventDBFilePath);
     try {
-      let latestEventBlockNumber = 16740875;
+      let latestEventBlockNumber = await eventDB.getLatestEventBlockNumber();
       let deploymentBlockNumber = await this.queryDeploymentBlockNumber(
         poolAddress
       );
