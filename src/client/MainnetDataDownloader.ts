@@ -48,14 +48,18 @@ export class MainnetDataDownloader {
   }
 
   async queryDeploymentBlockNumber(poolAddress: string): Promise<number> {
-    // Hardcoded block number
-    return this.queryInitializationBlockNumber(poolAddress); //16
-}
+    // TODO how to know accurate block number on contract deployment?
+    // Maybe use etherscan API or scan back mainnet trxs through the first event the contract emitted.
+    // BTW, for most cases, it's the same as Initialization event block number. Let's take this now.
+    return this.queryInitializationBlockNumber(poolAddress);
+  }
 
-async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
-  // Hardcoded block number
-  return initializationEvent[0].blockNumber; //16
-}
+  async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
+    let uniswapV3Pool = await this.getCorePoolContarct(poolAddress);
+    let initializeTopic = uniswapV3Pool.filters.Initialize();
+    let initializationEvent = await uniswapV3Pool.queryFilter(initializeTopic);
+    return initializationEvent[0].blockNumber;
+  }
 
   async parseEndBlockTypeWhenInit(
     toBlock: EndBlockTypeWhenInit,
@@ -134,7 +138,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
     let initializeTopic = uniswapV3Pool.filters.Initialize();
     let initializationEvent = await uniswapV3Pool.queryFilter(initializeTopic);
     let initializationSqrtPriceX96 = initializationEvent[0].args.sqrtPriceX96;
-    let initializationEventBlockNumber = initializationEvent[0].blockNumber; //16
+    let initializationEventBlockNumber = initializationEvent[0].blockNumber;
 
     // check db file then
     let filePath = this.generateMainnetEventDBFilePath(poolName, poolAddress);
@@ -231,10 +235,9 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
       let uniswapV3Pool = await this.getCorePoolContarct(poolAddress);
 
       // check and record initialize event if needed
-      let updateInitializationEvent = true;
+      let updateInitializationEvent = false;
       let initializationEventBlockNumber =
         await eventDB.getInitializationEventBlockNumber();
-        
       if (0 == initializationEventBlockNumber) {
         updateInitializationEvent = true;
         let initializeTopic = uniswapV3Pool.filters.Initialize();
@@ -328,7 +331,6 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
     endBlock: number,
     onlyInitialize: boolean = false
   ): Promise<ConfigurableCorePool> {
-    // @ts-ignore
     let initializationEventBlockNumber =
       await eventDB.getInitializationEventBlockNumber();
 
@@ -338,8 +340,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
     if (onlyInitialize) return configurableCorePool;
 
     // replay events to find swap input param we need
-    const startBlock = initializationEventBlockNumber;
-    
+    let startBlock = initializationEventBlockNumber;
     let currBlock = startBlock;
 
     while (currBlock <= endBlock) {
