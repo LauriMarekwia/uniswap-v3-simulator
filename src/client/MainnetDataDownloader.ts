@@ -49,12 +49,12 @@ export class MainnetDataDownloader {
 
   async queryDeploymentBlockNumber(poolAddress: string): Promise<number> {
     // Hardcoded block number
-    return 16725679;
+    return 16740875;
 }
 
 async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
   // Hardcoded block number
-  return 16725679;
+  return 16740875;
 }
 
   async parseEndBlockTypeWhenInit(
@@ -134,7 +134,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
     let initializeTopic = uniswapV3Pool.filters.Initialize();
     let initializationEvent = await uniswapV3Pool.queryFilter(initializeTopic);
     let initializationSqrtPriceX96 = initializationEvent[0].args.sqrtPriceX96;
-    let initializationEventBlockNumber = 16725679;
+    let initializationEventBlockNumber = 16740875;
 
     // check db file then
     let filePath = this.generateMainnetEventDBFilePath(poolName, poolAddress);
@@ -211,7 +211,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
     // check toBlock then
     let eventDB = await EventDBManager.buildInstance(mainnetEventDBFilePath);
     try {
-      let latestEventBlockNumber = 16725679;
+      let latestEventBlockNumber = 16740875;
       let deploymentBlockNumber = await this.queryDeploymentBlockNumber(
         poolAddress
       );
@@ -232,7 +232,8 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
 
       // check and record initialize event if needed
       let updateInitializationEvent = true;
-      let initializationEventBlockNumber =16725679;
+      let initializationEventBlockNumber =
+        await eventDB.getInitializationEventBlockNumber();
         
       if (0 == initializationEventBlockNumber) {
         updateInitializationEvent = true;
@@ -337,7 +338,7 @@ async queryInitializationBlockNumber(poolAddress: string): Promise<number> {
     if (onlyInitialize) return configurableCorePool;
 
     // replay events to find swap input param we need
-    const startBlock = 16725679; //CHANGE
+    const startBlock = initializationEventBlockNumber;
     
     let currBlock = startBlock;
 
