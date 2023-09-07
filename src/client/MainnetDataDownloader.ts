@@ -127,9 +127,7 @@ export class MainnetDataDownloader {
     );
 
     let uniswapV3Pool = await this.getCorePoolContarct(poolAddress);
-    let deploymentBlockNumber = await this.queryDeploymentBlockNumber(
-      poolAddress
-    );
+    let deploymentBlockNumber = 12706783;
     if (toBlockAsNumber < deploymentBlockNumber)
       throw new Error(
         `The pool does not exist at block height: ${toBlockAsNumber}, it was deployed at block height: ${deploymentBlockNumber}`
@@ -201,7 +199,7 @@ export class MainnetDataDownloader {
   async update(
     mainnetEventDBFilePath: string,
     toBlock: EndBlockTypeWhenRecover,
-    batchSize: number = 5000
+    batchSize: number = 500000
   ) {
     // check dbfile first
     let { poolAddress } = this.parseFromMainnetEventDBFilePath(
