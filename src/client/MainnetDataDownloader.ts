@@ -138,7 +138,7 @@ export class MainnetDataDownloader {
     let initializeTopic = uniswapV3Pool.filters.Initialize();
     let initializationEvent = await uniswapV3Pool.queryFilter(initializeTopic);
     let initializationSqrtPriceX96 = initializationEvent[0].args.sqrtPriceX96;
-    let initializationEventBlockNumber = initializationEvent[0].blockNumber;
+    let initializationEventBlockNumber = 12706783;
 
     // check db file then
     let filePath = this.generateMainnetEventDBFilePath(poolName, poolAddress);
