@@ -587,11 +587,16 @@ export class MainnetDataDownloader {
             date
           );
           latestEventBlockNumber = event.transaction.blockNumber;
+          fromTimestamp = event.timestamp; 
         }
         if (events.length < 1000) {
           break;
         } else {
-          skip += 1000;
+          if (skip + 1000 > 5000) {
+            skip = 0;  // Reset skip to 0
+          } else {
+            skip += 1000;  // Increment skip by 1000
+          }
         }
       } else if (eventType === EventType.SWAP) {
         const query = gql`
@@ -645,11 +650,16 @@ export class MainnetDataDownloader {
             date
           );
           latestEventBlockNumber = event.transaction.blockNumber;
+          fromTimestamp = event.timestamp; 
         }
         if (events.length < 1000) {
           break;
         } else {
-          skip += 1000;
+          if (skip + 1000 > 5000) {
+            skip = 0;  // Reset skip to 0
+          } else {
+            skip += 1000;  // Increment skip by 1000
+          }
         }
       }
     }
